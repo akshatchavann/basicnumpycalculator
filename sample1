@@ -1,0 +1,125 @@
+import pandas as pd
+import numpy as np
+
+answer={
+  'mean': [],
+  'variance': [],
+  'standard deviation': [],
+  'max': [],
+  'min': [],
+  'sum': []
+}
+
+s = [1,2,3,4,5,6,7,8,9]
+a = np.arange(9).reshape(3, 3)
+#for row in a:
+    #print(row)
+
+def ir(array):
+    array = a
+    d = a[:, 0]
+    e = a[:, 1]
+    f = a[:, 2]
+    g = []
+    g.append(d)
+    g.append(e)
+    g.append(f)
+    return g
+def cm(list):
+    a = np.arange(len(list)).reshape(3,3)
+    b = []
+    c = []
+    d = []
+    g = ir(a)
+    for x in g:
+        c.append(np.mean(x))
+    answer["mean"].append(c)
+    for row in a:
+        b.append(np.mean(row))
+    answer["mean"].append(b)
+    d = [np.mean(a.flatten().tolist())]
+    answer["mean"].append(d)
+
+
+def v(array):
+    a = np.arange(len(array)).reshape(3, 3)
+    b = []
+    c = []
+    d = []
+    g = ir(a)
+    for x in g:
+        c.append(np.var(x))
+    answer['variance'].append(c)
+    for row in a:
+        b.append(np.var(row))
+    answer['variance'].append(b)
+    d = [np.var(a.flatten().tolist())]
+    answer['variance'].append(d)
+
+def sd(array):
+    a = np.arange(len(array)).reshape(3, 3)
+    b = []
+    c = []
+    d = []
+    g = ir(a)
+    for x in g:
+        c.append(np.std(x))
+    answer['standard deviation'].append(c)
+    for row in a:
+        b.append(np.std(row))
+    answer['standard deviation'].append(b)
+    d = [np.std(a.flatten().tolist())]
+    answer['standard deviation'].append(d)
+
+def max(array):
+    a = np.arange(len(array)).reshape(3, 3)
+    b = []
+    c = []
+    d = []
+    g = ir(a)
+    for x in g:
+        c.append(np.max(x))
+    answer['max'].append(c)
+    for row in a:
+        b.append(np.max(row))
+    answer['max'].append(b)
+    d = [np.max(a.flatten().tolist())]
+    answer['max'].append(d)
+
+def min(array):
+    a = np.arange(len(array)).reshape(3, 3)
+    b = []
+    c = []
+    d = []
+    g = ir(a)
+    for x in g:
+        c.append(np.min(x))
+    answer['min'].append(c)
+    for row in a:
+        b.append(np.min(row))
+    answer['min'].append(b)
+    d = [np.min(a.flatten().tolist())]
+    answer['min'].append(d)
+
+def sum(array):
+    a = np.arange(len(array)).reshape(3, 3)
+    b = []
+    c = []
+    d = []
+    g = ir(a)
+    for x in g:
+        c.append(np.sum(x))
+    answer['sum'].append(c)
+    for row in a:
+        b.append(np.sum(row))
+    answer['sum'].append(b)
+    d = [np.sum(a.flatten().tolist())]
+    answer['sum'].append(d)
+
+cm(s)
+v(s)
+sd(s)
+max(s)
+min(s)
+sum(s)
+print(answer)
