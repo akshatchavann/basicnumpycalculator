@@ -1,0 +1,38 @@
+import pandas as pd
+import numpy as np
+
+x = pd.read_csv('/Users/akshatchavan/Library/Containers/com.microsoft.Excel/Data/Desktop/adult.data (1).csv')
+df = pd.DataFrame(x)
+#print(df["race"].value_counts())
+
+g = df.loc[df["sex"]=="Male"]
+f = g["age"].mean()
+print(f)
+
+t = df["education"].value_counts(normalize = True)
+print(t["Bachelors"])
+
+count = df.loc[(df['education'] == 'Bachelors') | (df['education'] == 'Masters') | (df['education'] == 'Doctorate')]
+h = count["salary"].value_counts()
+print(h[">50K"])
+
+anti = df.loc[~((df['education'] == 'Bachelors') | (df['education'] == 'Masters') | (df['education'] == 'Doctorate'))]
+antireal = anti["salary"].value_counts()
+print(h[">50K"])
+
+hours = df["hours-per-week"]
+print(hours.min())
+
+minhours = df.loc[(df['hours-per-week'] == 1)]
+minhourz = minhours["salary"].value_counts()
+print(minhourz[">50K"])
+
+selected_rows = df.loc[df["salary"] == '>50K']
+salez = selected_rows["native-country"].value_counts(normalize=True)
+print(salez.idxmax())
+
+india = df.loc[(df['salary'] == '>50K') & (df['native-country'] == 'India')]
+ans = india["occupation"].value_counts(normalize=True)
+print(ans.idxmax())
+
+
