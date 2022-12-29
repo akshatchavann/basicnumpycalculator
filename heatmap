@@ -1,0 +1,24 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+x = pd.read_csv('/Users/akshatchavan/Library/Containers/com.microsoft.Excel/Data/Desktop/medical_examination.csv')
+df = pd.DataFrame(x)
+
+BMI = df["weight"] / (df["height"]**2)
+RMBI = BMI.apply(lambda x: 1 if x > 25 else 0)
+df["BMI"] = RMBI
+
+rc = df["cholesterol"].apply(lambda x: 1 if x > 1 else 0)
+df["cholesterol"] = rc
+
+df_long = df.melt(id_vars='cardio', var_name='feature', value_name='value')
+sns.catplot(x='feature', y='value', hue='cardio', data=df_long, kind='bar')
+##plt.show()
+
+df_filtered = df[(df['ap_lo'] <= df['ap_hi']) & (df['height'] >= df['height'].quantile(0.025))&(df['height'] <= df['height'].quantile(0.975))&(df['weight'] >= df['weight'].quantile(0.025))&(df['weight'] <= df['weight'].quantile(0.975))]
+
+corr = df.corr()
+sns.heatmap(corr, annot=False, cmap='coolwarm', mask=np.triu(np.ones_like(corr, dtype=np.bool_)))
+plt.show()
