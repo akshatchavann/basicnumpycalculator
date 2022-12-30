@@ -1,0 +1,47 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+x = pd.read_csv("/Users/akshatchavan/Library/Containers/com.microsoft.Excel/Data/Desktop/fcc-forum-pageviews.csv")
+df = pd.DataFrame(x)
+df_filtered = df[(df["value"] <= df['value'].quantile(0.975)) & (df["value"] >= df['value'].quantile(0.025))]
+def draw_line_plot(df, xlabel, ylabel):
+  plt.plot(df[xlabel], df[ylabel], linestyle = "-")
+  plt.xlabel(xlabel.title())
+  plt.ylabel(ylabel.title())
+  plt.title('Daily freeCodeCamp Forum Page Views 5/2016-12/2019')
+  plt.show()
+
+draw_line_plot(df, 'date', 'value')
+
+df_bar = df.copy()
+df_bar['Year'] = pd.to_datetime(df_bar['date']).dt.year
+df_bar['Month'] = pd.to_datetime(df_bar['date']).dt.month
+
+df_bar = df_bar.groupby(['Year', 'Month'])['value'].mean()
+df_bar = df_bar.unstack()
+
+fig = df_bar.plot(kind= 'bar', figsize = (15,10)).figure
+
+plt.title('')
+plt.xlabel('Years')
+plt.ylabel('Average Page Views')
+plt.legend(title= 'Months', fontsize = 15, labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+             'August', 'September', 'October', 'November', 'December'])
+
+plt.show()
+
+df_box = df.copy()
+df_box.reset_index(inplace=True)
+df_box['Year'] = pd.DatetimeIndex(df_box["date"]).year
+df_box['Month'] = pd.DatetimeIndex(df_box["date"]).month
+plt1 =sns.boxplot(x = "Year", y = "value", data = df_box)
+plt1.set_title("Year-wise Box Plot (Trend)")
+plt1.set_xlabel('Year')
+plt1.set_ylabel('Page Views')
+plt2=sns.boxplot(x='Month',y='value',data=df_box)
+plt2.set_title("Month-wise Box Plot (Trend)")
+plt2.set_xlabel('Month')
+plt2.set_ylabel('Page Views')
+plt.show()
