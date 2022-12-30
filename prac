@@ -1,0 +1,32 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy.stats import linregress
+df = pd.read_csv("/Users/akshatchavan/Library/Containers/com.microsoft.Excel/Data/Desktop/epa-sea-level.csv")
+
+plt.scatter(df['Year'], df['CSIRO Adjusted Sea Level'])
+
+
+lineA = linregress(df['Year'], df['CSIRO Adjusted Sea Level'])
+xA = np.arange(df['Year'].min(), 2050, 1)
+yA = xA * lineA.slope + lineA.intercept
+
+plt.plot(xA, yA)
+
+df_2000 = df[df['Year'] >= 2000]
+
+lineB = linregress(df_2000['Year'], df_2000['CSIRO Adjusted Sea Level'])
+xB = np.arange(2000, 2050, 1)
+yB = xB * lineB.slope + lineB.intercept
+
+plt.plot(xB, yB)
+
+# Add labels and title
+plt.xlabel('Year')
+plt.ylabel('Sea Level (inches)')
+plt.title('Rise in Sea Level')
+plt.show()
+
+pred1 = 2050 * lineA.slope + lineA.intercept
+pred2 = 2050 * lineB.slope + lineB.intercept
